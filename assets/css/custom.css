@@ -1,29 +1,37 @@
 :root {
   --highlight: #d3d2cc;
 }
+
 .container {
   max-width: 800px; }
+
 .header {
   margin-top: 6rem;
   text-align: center; }
+
 .value-prop {
   margin-top: 1rem; }
+
 .value-props {
   margin-top: 4rem;
   margin-bottom: 4rem; }
+
 .docs-header {
   text-transform: uppercase;
-  font-size: 1.4rem;
+  font-size: 1.8rem;
   letter-spacing: .2rem;
   font-weight: 600; }
+
 .docs-section {
   border-top: 1px solid var(--highlight);
   padding: 4rem 0;
   margin-bottom: 0;}
+
 .value-img {
   display: block;
   text-align: center;
   margin: 2.5rem auto 0; }
+
 .example-grid .column,
 .example-grid .columns {
   background: var(--highlight);
@@ -36,10 +44,12 @@
   margin-bottom: .75rem;
   font-weight: 600;
   letter-spacing: .1rem; }
+
 .docs-example .row,
 .docs-example.row,
 .docs-example form {
   margin-bottom: 0; }
+
 .docs-example h1,
 .docs-example h2,
 .docs-example h3,
@@ -47,25 +57,32 @@
 .docs-example h5,
 .docs-example h6 {
   margin-bottom: 1rem; }
+
 .heading-font-size {
   font-size: 1.2rem;
   color: #999;
   letter-spacing: normal; }
+
 .code-example {
   margin-top: 1.5rem;
   margin-bottom: 0; }
+
 .code-example-body {
   white-space: pre;
   word-wrap: break-word }
+
 .example {
   position: relative; 
   margin-top: 4rem; }
+
 .example-header {
   font-weight: 600;
   margin-top: 1.5rem;
   margin-bottom: .5rem; }
+
 .example-description {
   margin-bottom: 1.5rem; }
+
 .example-screenshot-wrapper {
   display: block;
   position: relative;
@@ -73,13 +90,17 @@
   border-radius: 6px;
   border: 1px solid var(--highlight);
   height: 250px; }
+
 .example-screenshot-wrapper:hover {
   box-shadow: 0 0 11px rgba(33,33,33,.2); }
+
 .example-screenshot {
   width: 100%;
   height: auto; }
+
 .example-screenshot:hover {
   filter: opacity(85%); }
+
 .example-screenshot.coming-soon {
   width: auto;
   position: absolute;
@@ -88,22 +109,28 @@
   right: 5px;
   bottom: 5px;
   left: 5px; }
+
 .icon {
   width: 2.5rem; }
-.profile-picture {
-  border-radius: 50%;
-  box-shadow: 0 0 11px rgba(33,33,33,.2);
-  background: white;
-  display: block;
-  margin: 0 auto 1rem auto;
-  height: 5rem; }
+
 .social-links {
   margin-bottom: 1.5rem; }
+
 .social-links a {
   text-decoration: none;
   margin: 0 1rem; }
+
 .navbar {
   display: none; }
+
+.deemphasise {
+  font-size: 0.9rem;
+}
+
+.emphasise {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
 
 /* Larger than phone */
 @media (min-width: 550px) {
@@ -243,9 +270,4 @@
   .popover-link:hover,
   .popover-item:first-child .popover-link:hover:after {
     border-bottom-color: #33C3F0; }
-    
-  /* Profile picture */
-  .profile-picture {
-    margin: 0 1.5rem 0 0;
-    display: inline; }
 }
