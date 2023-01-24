@@ -7,14 +7,13 @@
   <meta name="author" content="Max Tan">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="assets/css/normalize.css">
   <link rel="stylesheet" href="assets/css/skeleton.css">
   <link rel="stylesheet" href="assets/css/custom.css">
 </head>
 <body>
   <div class="container">
     <section class="header">
-      <h3 class="title">Hello! My name is Max.</h3>
+      <h3>Hello, my name is Max &#128075;</h3>
       <div class="social-links">
         <a href="mailto:yenseow@gmail.com" target="_blank">
           <img class="icon" src="assets/images/email.png" alt="email">
@@ -29,21 +28,40 @@
           <img class="icon" src="assets/images/resume.png" alt="resume">
         </a>
       </div>
-      <p>I'm a lawyer-turned-web developer based in New York City. I enjoy solving technical problems and writing code that is clean, efficient, and readable. I'm proficient in the Ruby ecosystem, SQL, and HTML/CSS.</p>
+      <p>
+        I'm a <span class="deemphasise">lawyer</span>-turned-<span class="emphasise">web developer</span> living in New York City. I'm comfortable using the Ruby tech stack for all sorts of projects, but picking up a new framework or language isn't a problem. Have a look at my recent projects and case studies below!
+      </p>
     </section>
 
     <div class="docs-section examples">
-      <h6 class="docs-header">Selected Projects</h6>
+      <p class="docs-header">Selected Projects</p>
+
       <div class="row example">
-        <a class="example-screenshot-wrapper" target="_blank" href="https://columbia-law-lib-faq.fly.dev/search">
+        <a class="example-screenshot-wrapper" target="_blank" href="https://guides.law.columbia.edu/services/FAQ">
           <img class="example-screenshot" src="assets/images/faq.png" alt="Columbia Law Library FAQ">
         </a>
         <div class="one-half offset-by-one-half column">
           <h6 class="example-header">Columbia Law Library FAQ</h6>
           <p class="example-description">A web app that allows library patrons to search for frequently asked questions - Ruby, Sinatra, Google Sheets API.</p>
-          <a class="button" href="https://columbia-law-lib-faq.fly.dev/search" target="_blank">Link</a>
+          <a class="button" href="https://guides.law.columbia.edu/services/FAQ" target="_blank">Live Website</a>
+          <a class="button" href="#" target="_blank">Source Code</a>
+          <a class="button" href="#" target="_blank">Read More</a>
         </div>
       </div>
+
+      <div class="row example">
+        <a class="example-screenshot-wrapper" target="_blank" href="https://guides.law.columbia.edu/services/FAQ">
+          <img class="example-screenshot" src="assets/images/faq.png" alt="Columbia Law Library FAQ">
+        </a>
+        <div class="one-half offset-by-one-half column">
+          <h6 class="example-header">Columbia Law Library FAQ</h6>
+          <p class="example-description">A web app that allows library patrons to search for frequently asked questions - Ruby, Sinatra, Google Sheets API.</p>
+          <a class="button" href="https://guides.law.columbia.edu/services/FAQ" target="_blank">Live Website</a>
+          <a class="button" href="#" target="_blank">Source Code</a>
+          <a class="button" href="#" target="_blank">Read More</a>
+        </div>
+      </div>
+
       <div class="row example">
         <a class="example-screenshot-wrapper" target="_blank" href="https://github.com/max-tys/ls/tree/main/rb185/todos">
           <img class="example-screenshot" src="assets/images/todo.png" alt="Todo Tracker">
@@ -51,9 +69,11 @@
         <div class="one-half offset-by-one-half column">
           <h6 class="example-header">To-do Tracker</h6>
           <p class="example-description">A web-based personal task manager that supports creating, editing and deleting lists and to-do items - Ruby, Sinatra, PostgreSQL.</p>
-          <a class="button" href="https://github.com/max-tys/ls/tree/main/rb185/todos" target="_blank">GitHub</a>
+          <a class="button" href="https://github.com/max-tys/ls/tree/main/rb185/todos" target="_blank">Live Website</a>
+          <a class="button" href="https://github.com/max-tys/ls/tree/main/rb185/todos" target="_blank">Source Code</a>
         </div>
       </div>
+
     </div>
   </div>
 </body>
