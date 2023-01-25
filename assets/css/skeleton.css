@@ -121,11 +121,11 @@ are based on 10px sizing. So basically 1.5rem = 15px :) */
 html {
   font-size: 62.5%; }
 body {
-  font-size: 1rem; /* currently ems cause chrome bug misinterpreting rems on body element */
+  font-size: 1rem;
   line-height: 1.6;
   font-weight: 400;
   font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background-color: hsl(200, 30%, 98%);
+  background-color: white;
   color: #0a0908; }
 
 
@@ -162,9 +162,10 @@ p {
 /* Links
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 a {
-  color: #1EAEDB; }
+  color: #0080a9; } 
 a:hover {
-  color: #0FA0CE; }
+  color: #032f3d;
+}
 
 
 /* Buttons
@@ -191,6 +192,7 @@ input[type="button"] {
   border: 1px solid #bbb;
   cursor: pointer;
   box-sizing: border-box; }
+
 .button:hover,
 button:hover,
 input[type="submit"]:hover,
@@ -201,17 +203,20 @@ button:focus,
 input[type="submit"]:focus,
 input[type="reset"]:focus,
 input[type="button"]:focus {
-  color: #333;
   border-color: #888;
+  /* https://getcssscan.com/css-box-shadow-examples */
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+  color: #333;
   outline: 0; }
+
 .button.button-primary,
 button.button-primary,
 input[type="submit"].button-primary,
 input[type="reset"].button-primary,
 input[type="button"].button-primary {
   color: #FFF;
-  background-color: #33C3F0;
-  border-color: #33C3F0; }
+  background-color: #0080a9;
+  border-color: #0080a9; }
 .button.button-primary:hover,
 button.button-primary:hover,
 input[type="submit"].button-primary:hover,
@@ -223,8 +228,8 @@ input[type="submit"].button-primary:focus,
 input[type="reset"].button-primary:focus,
 input[type="button"].button-primary:focus {
   color: #FFF;
-  background-color: #1EAEDB;
-  border-color: #1EAEDB; }
+  background-color: #0080a9;
+  border-color: #0080a9; }
 
 
 /* Forms
@@ -296,6 +301,7 @@ ul {
 ol {
   list-style: decimal inside; }
 ol, ul {
+  font-size: 1.8rem;
   padding-left: 0;
   margin-top: 0; }
 ul ul,

@@ -1,5 +1,27 @@
 :root {
-  --highlight: #d3d2cc;
+  --highlight: hsl(197, 7%, 81%);
+}
+
+::selection {
+  background-color: #e3f1f5;
+  color: black;
+}
+
+blockquote {
+  background-color: #def8ff;
+  border-left: 1rem #1EAEDB solid;
+  margin: 0 1rem;
+  padding-left: 2rem;
+}
+
+code {
+  font-size: 1.6rem;
+}
+
+.bottom-nav {
+  display: flex;
+  justify-content: space-between;
+  margin: 6rem 0;
 }
 
 .container {
@@ -125,13 +147,13 @@
   display: none; }
 
 .deemphasise {
-  color: hsl(0, 0%, 50%);
+  font-weight: 300;
 }
 
 .emphasise {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: hsl(194, 83%, 27%);
+  color: #032f3d;
+  font-size: 2.2rem;
+  font-weight: 600;
 }
 
 /* Larger than phone */
