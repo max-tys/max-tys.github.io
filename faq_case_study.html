@@ -15,7 +15,7 @@
     <h1>Columbia Law Library FAQ: Case Study</h1>
     
     <blockquote>
-      <p>726 words &#183; 3-4 min read</p>
+      <p>726 words &#183; 4 min read</p>
     </blockquote>
     
     <h2>Introduction</h2>
@@ -57,6 +57,8 @@
     <p>I&#39;m hoping to improve the performance and scalability of this application through caching. At the moment, the application pulls the entire database from Google Sheets whenever someone queries the database or requests to see a list of all the FAQs. This is unnecessary because the database is updated infrequently. This is also undesirable because it increases the chances of exceeding the <a href="https://developers.google.com/sheets/api/limits">Google Sheets API usage limits</a>, and it greatly increases the latency for the application to fetch data.</p>
     
     <p>Caching is expected to reduce the page load time significantly, but we can take it further with a search as you type functionality. This gives the users instant feedback on their search query, and it obviates the need to serve any HTTP responses from the server.</p>
+
+    <p>If you have a chance to <a href="https://github.com/max-tys/law-lib-faq">check out my code</a>, your feedback would be greatly appreciated.</p>
 
     <div class="bottom-nav">
       <a href="index.html" class="button">Back to Homepage</a>
