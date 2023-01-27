@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="assets/css/custom.css">
 </head>
 <body>
-  <nav class="container">
+  <div class="container">
     <h1>Stock Portfolio Tracker: Case Study</h1>
     
     <blockquote>
@@ -50,7 +50,7 @@
 
     <p>The conceptual schema is relatively straightforward. Each portfolio can have multiple holdings, and each holding can have multiple transactions. I created three Active Record models to represent each of the relations. When a portfolio is deleted, all its associated holdings and transactions will be removed from the database too. This can easily be achieved by adding the <code>dependent: :destroy</code> option to the model.</p>
 
-    <p>As for the routes, I utilised <a href="https://guides.rubyonrails.org/routing.html#resource-routing-the-rails-default" target="_blank">resource routing</a> to declare the standard RESTful routes quickly. To simplify the otherwise unwieldy paths (e.g. <code>/portfolios/1/holdings/2/transactions/3</code>), I chose to nest the resources in a <a href="https://guides.rubyonrails.org/routing.html#shallow-nesting"  target="_blank">shallow</a> manner. And since the models have been <a href="https://guides.rubyonrails.org/association_basics.html#why-associations-questionmark" target="_blank">associated</a> with each other, we can easily refer to their parent or child objects with the <a href="https://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html" target="_blank">class methods provided by Rails</a>. These methods obviate the need to retrieve the relevant id from a deeply nested path.</p>
+    <p>As for the routes, I utilised <a href="https://guides.rubyonrails.org/routing.html#resource-routing-the-rails-default" target="_blank">resource routing</a> to declare the standard RESTful routes quickly. To simplify the otherwise unwieldy paths, I chose to nest the resources in a <a href="https://guides.rubyonrails.org/routing.html#shallow-nesting"  target="_blank">shallow</a> manner. And since the models have been <a href="https://guides.rubyonrails.org/association_basics.html#why-associations-questionmark" target="_blank">associated</a> with each other, we can easily refer to their parent or child objects with the <a href="https://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html" target="_blank">class methods provided by Rails</a>. These methods obviate the need to retrieve the relevant id from a deeply nested path.</p>
 
     <h2>Reducing External API Calls</h2>
 
@@ -81,7 +81,7 @@ end</code></pre>
     <p>If you have a chance to <a href="https://github.com/max-tys/stock-portfolio">check out my code</a>, your feedback would be greatly appreciated.</p>
 
     <div class="bottom-nav">
-      <a href="index.html" class="button">Back to Homepage</a>
+      <a href="index.html" class="button">Back to Home</a>
       <a href="#" class="button">Scroll to Top</a>
     </div>
   </div>
