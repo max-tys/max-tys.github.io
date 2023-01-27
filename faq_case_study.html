@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Max Tan</title>
+  <meta name="description" content="Max's Developer Portfolio">
+  <meta name="author" content="Max Tan">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="assets/css/skeleton.css">
+  <link rel="stylesheet" href="assets/css/custom.css">
+</head>
+<body>
+  <nav class="container">
+    <h1>Columbia Law Library FAQ: Case Study</h1>
+    
+    <blockquote>
+      <p>726 words &#183; 3-4 min read</p>
+    </blockquote>
+    
+    <h2>Introduction</h2>
+
+    <p>This web application provides answers to frequently asked questions (&quot;FAQ&quot;) about the law library of <a href="https://www.law.columbia.edu/">Columbia Law School</a>. It is built with <a href="https://sinatrarb.com/">Sinatra</a> and linked to an online spreadsheet via the Google Sheets API. </p>
+    
+    <p>This case study documents the development process and examines the potential areas for improvement.</p>
+    
+    <h2>Picking the Right Tools for the Job</h2>
+    
+    <p>A couple of months ago, I was given the opportunity to develop an FAQ page for the law library. They asked for a web application that could be embedded as a widget on their <a href="https://guides.law.columbia.edu/services">Guide to Services and Policies page</a>. The FAQs would be updated from time to time, and there should also be a search functionality to locate questions and answers quickly.</p>
+    
+    <p>Since this was to be a lightweight project, I decided to build the application with Sinatra, a no-frills framework that could be deployed easily with minimal configuration. It is capable of producing a web application with just a single file.</p>
+    
+    <p>I chose to use Google Sheets as the database because it is not expected to store large amounts of data. At the time of writing, we&#39;re looking at only about 50 questions and answers. Moreover, it is simple to manage and share a cloud-based spreadsheet. A librarian just needs the link to the spreadsheet to view and edit the Q&amp;As on their web browser, and this can be done anywhere on any device with an internet connection.</p>
+    
+    <p>The main disadvantage of using Google Sheets is its limited functionality. Since it is not designed to be used as a database, it is unable to create an index and query information efficiently. I worked around this issue by writing a linear search algorithm. It finds all matching entries by scanning the entire table row by row, and it has a time complexity of O(n). This does not scale well and is less than ideal. Nonetheless, given the small size of the spreadsheet, the application still managed to render a list of all the questions and answers within 1 to 1.5 seconds.</p>
+    
+    <h2>Connecting to the Google Sheets API Securely</h2>
+    
+    <p>There are three types of credentials which grant access to Google APIs:</p>
+    
+    <ol>
+    <li>API keys. This is used to access <em>public</em> data or resources anonymously. As the FAQ spreadsheet is a private document, this is not a suitable option.</li>
+    <li>OAuth 2.0 client ID. This stands for &quot;Open Authorization&quot;, and it is used to access <em>another</em> person&#39;s spreadsheet <em>on behalf of the user of your web app</em>.</li>
+    <li>Service account. In contrast to OAuth, this grants access to resources on <em>your own</em> Google account. Moreover, it does not access the spreadsheet on behalf of any existing users.</li>
+    </ol>
+    
+    <p>I chose the third option as I have access to the FAQ spreadsheet and can share it with a robot service account. The process for creating a service account and generating its credentials is documented on <a href="https://developers.google.com/workspace/guides/create-credentials#service-account">Google Workspace</a>. </p>
+    
+    <p>After setting up the service account, I downloaded the service account key in the form of a JSON file, and all that remained to be done was to supply the <a href="https://github.com/gimite/google-drive-ruby">Google Drive gem</a> with the location of the key in my project folder.</p>
+    
+    <p>As the JSON file grants access to my cloud resources, it is important to avoid exposing this file publicly. I added it to my <code>.gitignore</code> file to avoid committing it publicly. For good measure, I also saved the spreadsheet link as an environment variable. In the development environment, it is saved in a <code>.env</code> file and retrieved through the <code>dotenv</code> gem. In the production environment (Fly.io), it is stored as a <a href="https://fly.io/docs/reference/secrets/">secret</a> in an encrypted vault.</p>
+    
+    <h2>Future Work</h2>
+    
+    <p>Finally, I would like to highlight two opportunities to enhance the user experience.</p>
+    
+    <p>I&#39;m hoping to improve the performance and scalability of this application through caching. At the moment, the application pulls the entire database from Google Sheets whenever someone queries the database or requests to see a list of all the FAQs. This is unnecessary because the database is updated infrequently. This is also undesirable because it increases the chances of exceeding the <a href="https://developers.google.com/sheets/api/limits">Google Sheets API usage limits</a>, and it greatly increases the latency for the application to fetch data.</p>
+    
+    <p>Caching is expected to reduce the page load time significantly, but we can take it further with a search as you type functionality. This gives the users instant feedback on their search query, and it obviates the need to serve any HTTP responses from the server.</p>
+
+    <div class="bottom-nav">
+      <a href="index.html" class="button">Back to Homepage</a>
+      <a href="#" class="button">Scroll to Top</a>
+    </div>
+  </div>
+</body>
+</html>

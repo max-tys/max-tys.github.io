@@ -12,15 +12,15 @@
 </head>
 <body>
   <nav class="container">
-    <h1 id="title">Stock Portfolio Tracker: Case Study</h1>
+    <h1>Stock Portfolio Tracker: Case Study</h1>
     
     <blockquote>
-      <p><em>4-5 min read</em></p>
+      <p>988 words &#183; 5 min read</p>
     </blockquote>
     
     <h2>Introduction</h2>
 
-    <p>This web application allows you to keep track of your stocks, equities, ETFs, and any other type of financial securities. Thanks to the <a href="https://finnhub.io/">Finnhub Stock API</a>, real-time prices are available for US stocks, forex and crypto. I built this application with Ruby on Rails, and it is backed by a PostgreSQL database.</p>
+    <p>This web application allows you to keep track of your stocks, ETFs, and other financial instruments. Thanks to the <a href="https://finnhub.io/" target="_blank">Finnhub Stock API</a>, real-time prices are available for US stocks, forex and crypto. I built this application with Ruby on Rails, and it is backed by a PostgreSQL database.</p>
 
     <p>This case study will outline the development process, highlight some of the technical challenges I encountered, and explain the approach I took to overcome those issues.</p>
 
@@ -28,55 +28,59 @@
 
     <p>Let&#39;s begin with an brief tour of how the application works.</p>
 
-    <p>Rails uses the popular Model-View-Controller (MVC) architectural pattern. This means it separates and assigns the various functions or concerns of the application to the three MVC components. In a nutshell:</p>
+    <p>Rails uses the popular Model-View-Controller (MVC) architectural pattern. This means it separates and assigns the various functionalities or concerns of the application to each of the three MVC components. In a nutshell:</p>
 
     <ol>
-    <li>the Controller is the brain or the logic center of the application, and acts like a middleman between the Model and the View;</li>
-    <li>the Model is responsible for anything pertaining to the database; and</li>
-    <li>the View is solely concerned with generating and formatting the HTTP response.</li>
+      <li>the Model communicates with the database;</li>
+      <li>the View generates the page to be displayed by the browser; and</li>
+      <li>the Controller acts as the middleman between the Model and the View.</li>
     </ol>
 
-    <p>When a browser sends a HTTP request to the Rails server, the request is first processed by <code>config/routes.rb</code>, which acts as the mailroom of the application. <code>routes.rb</code> decides where the request should be sent to. In this application, a request for the root path <code>/</code> is directed to the <code>Portfolios#index</code> controller-action pair.</p>
+    <p>When someone sends a request for the root path <code>/</code> to the Rails server, the first order of business is to figure out which controller, or more specifically, the method or <em>action</em> within the controller, is responsible for handling that request.</p>
+      
+    <p>To that end, Rails looks to <code>config/routes.rb</code>, which functions as the mailroom of the application. It contains a list of mappings between the requests and the controller actions. In this application, the request for the root path is handled by the <code>index</code> method of the <code>Portfolios</code> controller.</p>
 
-    <p>I have designed the homepage to dynamically display a list of portfolios and their respective market values. Since it is not a static page, the controller needs the model&#39;s help to retrieve the financial information stored in the database. </p>
+    <p>I have designed the homepage to dynamically display a list of portfolios. This includes information about their respective investment costs, market values, and the unrealized gains and losses. Since the page is not static, the controller needs the model&#39;s help to retrieve the financial information stored in the database. </p>
 
-    <p>The model fetches the data accordingly and passes it back to the controller. Once the controller has all the information that it needs to handle the request, it forwards them to the view in the form of instance variables. The view blends the instance variables and the static HTML elements seamlessly into a <code>.html</code> file, and this is served as part of the final HTTP response to the browser.</p>
+    <p>The model fetches the data accordingly and hands it over to the controller. Now that the controller has all the information it needs to handle the request, it forwards them to the view in the form of instance variables, e.g. <code>@portfolios</code>.</p>
+
+    <p>Finally, the view blends the instance variables and the static HTML elements seamlessly into a <code>.html</code> file and serves it as part of the response to the browser.</p>
 
     <h2>Defining the Schema and the Routes</h2>
 
-    <p>The conceptual schema is relatively simple. Each portfolio can have multiple holdings, and each holding can have multiple transactions. For instance, a FAANG portfolio comprises the stocks of the five big tech companies, and each of the holdings can be bought and sold repeatedly. I created three Active Record models to represent each of the relations.</p>
+    <p>The conceptual schema is relatively straightforward. Each portfolio can have multiple holdings, and each holding can have multiple transactions. I created three Active Record models to represent each of the relations. When a portfolio is deleted, all its associated holdings and transactions will be removed from the database too. This can easily be achieved by adding the <code>dependent: :destroy</code> option to the model.</p>
 
-    <p>As for the routes, I utilised <a href="https://guides.rubyonrails.org/routing.html#resource-routing-the-rails-default">resource routing</a> to declare the standard RESTful routes quickly. To simplify the paths (e.g. <code>/transactions/3</code> instead of <code>/portfolios/1/holdings/2/transactions/3</code>), I chose to nest the resources in a <a href="https://guides.rubyonrails.org/routing.html#shallow-nesting">shallow</a> manner. And since the models are formally <a href="https://guides.rubyonrails.org/association_basics.html#why-associations-questionmark">associated</a> with each other, we can easily refer to their parent or child objects with the <a href="https://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html">class methods provided by Rails</a>, without having to retrieve the relevant id from a deeply nested path.</p>
+    <p>As for the routes, I utilised <a href="https://guides.rubyonrails.org/routing.html#resource-routing-the-rails-default" target="_blank">resource routing</a> to declare the standard RESTful routes quickly. To simplify the otherwise unwieldy paths (e.g. <code>/portfolios/1/holdings/2/transactions/3</code>), I chose to nest the resources in a <a href="https://guides.rubyonrails.org/routing.html#shallow-nesting"  target="_blank">shallow</a> manner. And since the models have been <a href="https://guides.rubyonrails.org/association_basics.html#why-associations-questionmark" target="_blank">associated</a> with each other, we can easily refer to their parent or child objects with the <a href="https://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html" target="_blank">class methods provided by Rails</a>. These methods obviate the need to retrieve the relevant id from a deeply nested path.</p>
 
     <h2>Reducing External API Calls</h2>
 
-    <p>The application&#39;s dependency on an external API limits its scalability. A free user of the Finnhub Stock API is limited to only <a href="https://finnhub.io/pricing">60 API calls per minute</a>. If I had just three portfolios containing 10 holdings each, the rate limit would be exceeded by visiting the homepage more than twice in a minute.</p>
+    <p>The application&#39;s dependency on an external API greatly limits its scalability. In particular, a free user of the Finnhub Stock API is limited to only <a href="https://finnhub.io/pricing" target="_blank">60 API calls per minute</a>. If I had just three portfolios containing 10 holdings each, the rate limit would be exceeded by refreshing the homepage twice or more in a minute.</p>
 
-    <p>There are at least two ways of remedying this issue, both of which are targeted at reducing the number of API calls: (1) optimizing the code to eliminate any unnecessary calls, and (2) caching frequently used data. Since it is currently <a href="https://github.com/finnhubio/Finnhub-API/issues/165">not possible to obtain data about multiple stocks in a single API call</a>, I decided to use <a href="https://guides.rubyonrails.org/caching_with_rails.html#low-level-caching">low level caching</a> and store the results of the API calls in <code>Rails.cache</code>.</p>
+    <p>There are at least two ways to reduce the number of API calls in this application. One option is to optimize the code to eliminate any unnecessary calls. The other is to cache frequently used data. Since it is currently <a href="https://github.com/finnhubio/Finnhub-API/issues/165" target="_blank">not possible to obtain data about multiple stocks in a single API call</a>, I decided to use <a href="https://guides.rubyonrails.org/caching_with_rails.html#low-level-caching" target="_blank">low level caching</a> and store the results of the API calls in <code>Rails.cache</code>.</p>
 
-    <p>Rails provides a convenient way of retrieving and storing data in the cache, namely the <code>Rails.cache.fetch</code> method. If there is a cached value for a given key, Rails will return that value. On the other hand, if there is a cache miss, Rails will make an API call (by executing the block passed to <code>fetch</code>) and store the Finnhub data in the cache.</p>
+    <p>Rails provides a convenient way of retrieving and storing data in the cache, namely the <code>Rails.cache.fetch</code> method. If there is a cached value for a given key, Rails will return that value. On the other hand, if there is a cache miss, Rails will make an API call by executing the block passed to <code>fetch</code> and store the Finnhub data in the cache.</p>
 
     <pre><code class="ruby">Rails.cache.fetch(holding.id.to_s, expires_in: 60.seconds) do
   finnhub_client.quote(holding.symbol).c
 end</code></pre>
 
-    <p>That being said, there are tradeoffs involved with caching. In order to strike an appropriate balance between (1)the need to improve scalability against (2) the need to serve up-to-date data, I configured the cache to expire after 60 seconds. This can of course be adjusted up or down to meet the user&#39;s needs. Another solution would be to add a &#39;Refresh&#39; button to allow anyone to update the data on demand.</p>
+    <p>Having said that, we need to weigh the tradeoffs involved with caching. In order to strike an appropriate balance between (1) the need to improve scalability against (2) the need to serve up-to-date data, I configured the cache to expire after 60 seconds. This can of course be adjusted up or down to meet the user&#39;s needs. Another solution would be to add a &#39;Refresh&#39; button to allow users to update the data on demand.</p>
 
-    <p>Aside from reducing the chances of exceeding the external API rate limits, caching also helped to improve performance and page load times significantly. For a relatively small database containing 15 holdings held across 3 separate portfolios, caching reduced the response time for the <code>Portfolio#index</code> page by about <strong>97%</strong>. The first request took 1,070ms, but the second request only took 29ms because the financial data from Finnhub had already been stored in the cache. I found this remarkable considering that the application is fairly small and uncomplicated.</p>
+    <p>Before leaving this topic, it bears mentioning that another major benefit of caching was to improve performance and page load times significantly. For a relatively small database containing 15 holdings held across 3 separate portfolios, caching reduced the response time for the <code>Portfolio#index</code> page by about <strong>97%</strong>! The first request took 1,070ms - most of the latency can be attributed to the external API calls - but the second request only took 29ms because the data from Finnhub had already been stored in the cache.</p>
 
     <h2>Future Work</h2>
 
-    <p>I would like to highlight some opportunities to enhance this application.</p>
+    <p>To conclude this case study, I would like to highlight some opportunities to enhance this application:</p>
 
     <ul>
-    <li>Add the ability to sell. At the moment, the platform only keeps track of what you&#39;ve bought. The only way to &#39;sell&#39; a stock is to delete the transaction. This entails creating another column in the transactions database to indicate whether the transaction was a purchase or a sale.</li>
-    <li>Expand on the breadth and depth of financial data available through this platform, e.g. dividend payout dates, 52-week highs and lows, annualized profits or losses. Most of these can be retrieved with additional API calls or computed manually from the existing data.</li>
-    <li>Visualize the holdings in each portfolio. For instance, I could display the weighted distribution of stocks in a pie chart, and the performance of a holding over time in a 2D line graph.</li>
+      <li>Add the ability to sell. At the moment, the platform only keeps track of what you&#39;ve bought, and we can only simulate the selling of a stock by modifying or deleting the transaction. This feature can be implemented in part by adding a column in the transactions table to indicate whether it was a sale or a purchase.</li>
+      <li>Expand on the breadth and depth of financial data available through this platform, e.g. dividend payout dates, 52-week highs and lows, annualized profits or losses. Most of these can be retrieved with additional API calls or computed manually from the existing data.</li>
+      <li>Visualize the portfolio holdings. The weighted distribution of stocks can be displayed in a pie chart, and the performance of a holding over time can be tracked in a line graph.</li>
     </ul>
 
     <div class="bottom-nav">
       <a href="index.html" class="button">Back to Homepage</a>
-      <a href="#title" class="button">Scroll to Top</a>
+      <a href="#" class="button">Scroll to Top</a>
     </div>
   </div>
 </body>
